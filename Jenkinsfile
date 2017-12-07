@@ -16,7 +16,7 @@ pipeline {
     stage('Test Coverage') {
       agent any
       steps {
-        sh 'scannerHome = tool \'SonarQubeaScanner\';'
+        sh 'scannerHome = tool \'SonarQubeaScanner\'; echo ${scannerHome}'
         script {
           withSonarQubeEnv('SonarQube-6.7') {
             sh "${scannerHome}/bin/sonar-scanner"

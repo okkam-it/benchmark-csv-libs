@@ -18,7 +18,7 @@ pipeline {
       steps {
         script {
           withSonarQubeEnv('SonarQube-6.7') {
-            sh "opt/bin/sonar-scanner"
+            pwd; sh "/opt/bin/sonar-scanner"
           }
         }
         

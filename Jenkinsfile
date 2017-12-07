@@ -15,8 +15,10 @@ pipeline {
     }
     stage('Test Coverage') {
       steps {
-        sh 'echo tool \'SonarQubeaScanner\''
+        sh '''withSonarQubeEnv(\'SonarQube-6.7\') {
+mvn sonar:sonar
+                }'''
+        }
       }
     }
   }
-}

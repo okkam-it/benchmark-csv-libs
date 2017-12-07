@@ -13,7 +13,7 @@ pipeline {
             script {
               stage("SonarQube analysis") {
                 node {
-                  withSonarQubeEnv('My SonarQube Server') {
+                  withSonarQubeEnv('SonarQube-6.7') {
                     sh 'mvn clean package sonar:sonar'
                   }
                 }

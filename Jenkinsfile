@@ -14,11 +14,16 @@ pipeline {
       }
     }
     stage('Test Coverage') {
+      agent any
       steps {
-        sh '''withSonarQubeEnv(\'SonarQube-6.7\') {
-mvn sonar:sonar
-                }'''
+        sh 'scannerHome = tool \'SonarQubeaScanner\';'
+        script {
+          withSonarQubeEnv('SonarQube-6.7') {
+            sh "${scannerHome}/bin/sonar-scanner"
+          }
         }
+        
       }
     }
   }
+}

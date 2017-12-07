@@ -4,18 +4,13 @@ pipeline {
     stage('SonarQube') {
       agent any
       steps {
-        script {
-          stage 'Gradle Static Analysis'
-          withSonarQubeEnv {
-            sh "opt/sonar-scanner/bin/sonar-scanner" }
-          }
-          
-        }
+        waitForQualityGate()
       }
-      stage('Maven Install') {
-        steps {
-          sh 'mvn install'
-        }
+    }
+    stage('Maven Install') {
+      steps {
+        sh 'mvn install'
       }
     }
   }
+}

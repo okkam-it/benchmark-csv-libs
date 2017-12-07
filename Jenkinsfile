@@ -16,13 +16,14 @@ pipeline {
     stage('Test Coverage') {
       agent any
       steps {
+        sh '''echo "Script executed from: ${PWD}"
+'''
         script {
-          withSonarQubeEnv('SonarQube-6.7') {
-            pwd; sh "/opt/bin/sonar-scanner"
-          }
+          withSonarQubeEnv('SonarQube-6.7') {sh "/opt/bin/sonar-scanner"
         }
-        
       }
+      
     }
   }
+}
 }

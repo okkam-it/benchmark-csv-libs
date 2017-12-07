@@ -17,8 +17,6 @@ pipeline {
     stage('Test Coverage') {
       agent any
       steps {
-        sh '''echo "Script executed from: ${PWD}"
-'''
         script {
           withSonarQubeEnv('SonarQube-6.7') {mvn sonar:sonar}
         }

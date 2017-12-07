@@ -1,19 +1,22 @@
 pipeline {
   agent any
   stages {
-    stage('SonarQube') {
-      agent any
+    stage('Tools Setup') {
       steps {
-        sh 'scannerHome = tool \'SonarQube Scanner 2.8\''
-        sh '''withSonarQubeEnv(\'SonarQube Scanner\') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }'''
+        script {
+          tools {
+            jdk 'jdk7'
+            maven 'maven3'
+          }
         }
+        
       }
-      stage('Maven Install') {
-        steps {
-          sh 'mvn install'
-        }
+    }
+    stage('Test Java') {
+      steps {
+        sh 'sh \'java -version\''
+        sh 'sh \'which java\''
       }
     }
   }
+}

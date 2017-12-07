@@ -1,13 +1,25 @@
 pipeline {
   agent any
   stages {
-    stage('Start') {
+    stage('SonarQube') {
+      agent any
       steps {
-        sh 'echo \'hello from Pipeline\''
+        script {
+          node {
+            stage 'Checkout'
+            
+            checkout scm
+            
+            stage 'Gradle Static Analysis'
+            withSonarQubeEnv {
+              sh "./gradlew clean sonarqube"
+            }
+          }
+        }
+        
       }
     }
-    stage('Test') {
-      agent any
+    stage('Maven Install') {
       steps {
         sh 'mvn install'
       }

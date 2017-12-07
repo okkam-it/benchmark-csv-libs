@@ -7,22 +7,41 @@ pipeline {
       }
     }
     stage('SonarQube analysis') {
-      steps {
-        script {
-          stage("SonarQube analysis") {
-            node {
-              withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn clean package sonar:sonar'
+      parallel {
+        stage('SonarQube analysis') {
+          steps {
+            script {
+              stage("SonarQube analysis") {
+                node {
+                  withSonarQubeEnv('My SonarQube Server') {
+                    sh 'mvn clean package sonar:sonar'
+                  }
+                }
               }
             }
+            
           }
         }
-        
+        stage('Quality Gate') {
+          steps {
+            script {
+              stage("Quality Gate"){
+                timeout(time: 1, unit: 'HOURS') {
+                  def qg = waitForQualityGate()
+                  if (qg.status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                  }
+                }
+              }
+            }
+            
+          }
+        }
       }
     }
-    stage('End') {
+    stage('Maven Install') {
       steps {
-        echo 'End'
+        sh 'sh \'mvn  install\''
       }
     }
   }

@@ -15,7 +15,8 @@ pipeline {
     }
     stage('Test Coverage') {
       steps {
-        sh 'verify -Prun-its,coverage'
+        sh '''def scannerHome = tool \'sonar-scanner\'
+echo scannerHome'''
       }
     }
   }

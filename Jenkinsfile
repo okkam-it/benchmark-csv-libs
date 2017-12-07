@@ -11,6 +11,7 @@ pipeline {
       steps {
         sh 'mvn -version'
         sh 'which mvn'
+        sh 'mvn install'
       }
     }
     stage('Test Coverage') {

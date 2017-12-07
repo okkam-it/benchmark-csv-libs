@@ -6,9 +6,24 @@ pipeline {
         sh 'echo \'hello from Pipeline\''
       }
     }
-    stage('Maven Install') {
+    stage('SonarQube') {
       steps {
-        sh 'sh \'mvn  install\''
+        waitForQualityGate()
+        script {
+          withSonarQubeEnv('My SonarQube Server') {
+            sh 'mvn clean package sonar:sonar'
+          }
+        }
+        
+        script {
+          timeout(time: 1, unit: 'HOURS') {
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK') {
+              error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+          }
+        }
+        
       }
     }
   }

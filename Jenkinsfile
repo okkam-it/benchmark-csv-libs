@@ -13,9 +13,9 @@ pipeline {
         sh 'which mvn'
       }
     }
-    stage('Test Sonar') {
+    stage('Test Coverage') {
       steps {
-        sh 'mvn sonar:sonar'
+        sh 'verify -Prun-its,coverage'
       }
     }
   }

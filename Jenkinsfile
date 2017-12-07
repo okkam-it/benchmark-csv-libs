@@ -20,11 +20,10 @@ pipeline {
         sh '''echo "Script executed from: ${PWD}"
 '''
         script {
-          withSonarQubeEnv('SonarQube-6.7') {sh "~/../../../opt/sonar-scanner/bin/sonar-scanner"
+          withSonarQubeEnv('SonarQube-6.7') {mvn sonar:sonar}
         }
+        
       }
-      
     }
   }
-}
 }

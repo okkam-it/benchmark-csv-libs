@@ -19,7 +19,7 @@ pipeline {
         sh '''echo "Script executed from: ${PWD}"
 '''
         script {
-          withSonarQubeEnv('SonarQube-6.7') {sh "/opt/bin/sonar-scanner"
+          withSonarQubeEnv('SonarQube-6.7') {sh "~/../opt/bin/sonar-scanner"
         }
       }
       

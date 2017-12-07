@@ -4,13 +4,16 @@ pipeline {
     stage('SonarQube') {
       agent any
       steps {
-        waitForQualityGate()
+        sh 'scannerHome = tool \'SonarQube Scanner 2.8\''
+        sh '''withSonarQubeEnv(\'SonarQube Scanner\') {
+          sh "${scannerHome}/bin/sonar-scanner"
+        }'''
+        }
       }
-    }
-    stage('Maven Install') {
-      steps {
-        sh 'mvn install'
+      stage('Maven Install') {
+        steps {
+          sh 'mvn install'
+        }
       }
     }
   }
-}

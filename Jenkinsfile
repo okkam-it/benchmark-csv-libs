@@ -6,9 +6,8 @@ pipeline {
       steps {
         script {
           stage 'Gradle Static Analysis'
-          withSonarQubeEnv { def scannerHome = tool 'SonarQube Scanner 2.8';
-          withSonarQubeEnv('My SonarQube Server'){
-            sh "${scannerHome}/bin/sonar-scanner"}          }
+          withSonarQubeEnv {
+            sh "op/sonarqube-scanner/bin/sonar-scanner" }
           }
           
         }

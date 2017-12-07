@@ -15,8 +15,7 @@ pipeline {
     }
     stage('Test Coverage') {
       steps {
-        sh '''def scannerHome = tool \'sonar-scanner\'
-echo scannerHome'''
+        sh 'echo tool \'SonarQubeaScanner\''
       }
     }
   }
